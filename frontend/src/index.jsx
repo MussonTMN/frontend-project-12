@@ -1,8 +1,10 @@
-import { createRoot } from 'react-dom/client';
-import React from 'react';
+import ReactDOM from 'react-dom/client';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import init from './init.jsx';
 
-import Component from './components/App.jsx';
+const app = async () => {
+  const root = ReactDOM.createRoot(document.getElementById('chat'));
+  root.render(await init());
+};
 
-const container = document.getElementById('container');
-const root = createRoot(container);
-root.render(<Component />);
+app();

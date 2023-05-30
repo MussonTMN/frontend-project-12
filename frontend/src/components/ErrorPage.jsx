@@ -1,4 +1,4 @@
-import goTo from '../routes.js';
+import getRoute from '../routes.js';
 import pathToErrorImg from '../assets/404notFound.svg';
 
 const ErrorPage = () => (
@@ -8,7 +8,7 @@ const ErrorPage = () => (
     <p className="text-muted">
       Но вы можете перейти
       {' '}
-      <a href={goTo.chatPagePath()}>на главную страницу</a>
+      <a href={getRoute.chatPagePath()}>на главную страницу</a>
     </p>
   </div>
 );
