@@ -5,12 +5,12 @@ import {
   Route,
   Link,
 } from 'react-router-dom';
-import { Button, Navbar } from 'react-bootstrap';
+import { Button, Navbar, Container } from 'react-bootstrap';
 
 import LoginPage from './LoginPage.jsx';
 import ErrorPage from './ErrorPage.jsx';
 import PrivatePage from './PrivatePage.jsx';
-import useAuth from '../hooks/index.js';
+import { useAuth } from '../hooks/index.js';
 import AuthProvider from '../contexts/AuthProvider.jsx';
 import getRoute from '../routes.js';
 
@@ -19,7 +19,7 @@ const AuthButton = () => {
 
   return (
     auth.loggedIn
-      ? <Button onClick={auth.logOut}>Log out</Button>
+      ? <Button onClick={auth.logOut}>Выйти</Button>
       : null
   );
 };
@@ -27,9 +27,11 @@ const AuthButton = () => {
 const App = () => (
   <AuthProvider>
     <Router>
-      <Navbar bg="light" expand="lg">
-        <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
-        <AuthButton />
+      <Navbar className="shadow-sm" bg="white" expand="lg" variant="light">
+        <Container>
+          <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
+          <AuthButton />
+        </Container>
       </Navbar>
       <Routes>
         <Route path={getRoute.loginPagePath()} element={<LoginPage />} />

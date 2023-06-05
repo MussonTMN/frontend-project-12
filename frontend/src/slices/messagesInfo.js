@@ -1,13 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 import { fetchData } from './channelsInfo.js';
+
+const messagesStore = createEntityAdapter();
+const initialState = messagesStore.getInitialState({
+  messages: [],
+});
 
 const messageSlice = createSlice({
   name: 'messagesInfo',
-  initialState: { messages: [] },
+  initialState,
   reducers: {
-    addMessage(state, { payload }) {
-      state.messages.push(payload);
-    },
+    addMessage: messagesStore.addOne,
   },
   extraReducers: (builder) => {
     builder
@@ -19,3 +22,4 @@ const messageSlice = createSlice({
 
 export const { actions } = messageSlice;
 export default messageSlice.reducer;
+export const selectors = messagesStore.getSelectors((state) => state.messagesInfo);

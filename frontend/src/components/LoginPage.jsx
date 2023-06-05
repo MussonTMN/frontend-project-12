@@ -6,7 +6,7 @@ import {
   Row, Col, Container, Card, Button, Form,
 } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
-import useAuth from '../hooks/index.js';
+import { useAuth } from '../hooks/index.js';
 import routes from '../routes.js';
 import LoginImage from '../assets/loginImg.jpg';
 
@@ -34,7 +34,6 @@ const LoginPage = () => {
       setAuthFailed(false);
       try {
         const response = await axios.post(loginPath(), { username, password });
-        console.log(response.data);
         localStorage.setItem('userId', JSON.stringify(response.data));
         auth.logIn();
         const { from } = location.state || { from: { pathname: '/' } };
