@@ -13,21 +13,21 @@ const api = (socket) => {
   });
 
   const addChannel = (channel) => socket.emit('newChannel', channel, (response) => {
-    socket.on('newMessage', (payload) => {
+    socket.on('newChannel', (payload) => {
       console.log(response);
       store.dispatch(channelsActions.addChannel(payload));
     });
   });
 
   const removeChannel = (id) => socket.emit('removeChannel', { id }, (response) => {
-    socket.on('newMessage', (payload) => {
+    socket.on('removeChannel', (payload) => {
       console.log(response);
       store.dispatch(channelsActions.deleteChannel(payload));
     });
   });
 
-  const renameChannel = (channel) => socket.emit('removeChannel', channel, (response) => {
-    socket.on('newMessage', (payload) => {
+  const renameChannel = (channel) => socket.emit('renameChannel', channel, (response) => {
+    socket.on('renameChannel', (payload) => {
       console.log(response);
       store.dispatch(channelsActions.renameChannel(payload));
     });
