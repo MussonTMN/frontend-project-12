@@ -6,31 +6,44 @@ import { actions as messageActions } from '../slices/messagesInfo.js';
 
 const api = (socket) => {
   const addMessage = (message) => socket.emit('newMessage', message, (response) => {
-    socket.on('newMessage', (payload) => {
-      console.log(response);
-      store.dispatch(messageActions.addMessage(payload));
-    });
+    if (response.status !== 'ok') {
+      console.error(response);
+    } else {
+      socket.on('newMessage', (payload) => {
+        store.dispatch(messageActions.addMessage(payload));
+      });
+    }
   });
 
   const addChannel = (channel) => socket.emit('newChannel', channel, (response) => {
-    socket.on('newChannel', (payload) => {
-      console.log(response);
-      store.dispatch(channelsActions.addChannel(payload));
-    });
+    if (response.status !== 'ok') {
+      console.error(response);
+    } else {
+      socket.on('newChannel', (payload) => {
+        store.dispatch(channelsActions.addChannel(payload));
+      });
+    }
   });
 
   const removeChannel = (id) => socket.emit('removeChannel', { id }, (response) => {
-    socket.on('removeChannel', (payload) => {
-      console.log(response);
-      store.dispatch(channelsActions.deleteChannel(payload));
-    });
+    if (response.status !== 'ok') {
+      console.error(response);
+    } else {
+      socket.on('removeChannel', (payload) => {
+        store.dispatch(channelsActions.deleteChannel(payload));
+      });
+    }
   });
 
   const renameChannel = (channel) => socket.emit('renameChannel', channel, (response) => {
-    socket.on('renameChannel', (payload) => {
-      console.log(response);
-      store.dispatch(channelsActions.renameChannel(payload));
-    });
+    if (response.status !== 'ok') {
+      console.error(response);
+    } else {
+      socket.on('renameChannel', (payload) => {
+        console.log(response);
+        store.dispatch(channelsActions.renameChannel(payload));
+      });
+    }
   });
 
   return {

@@ -11,10 +11,11 @@ const fetchData = createAsyncThunk(
   },
 );
 
+const defaultId = 1;
 const channelsStore = createEntityAdapter();
 const initialState = channelsStore.getInitialState({
+  currentChannelId: defaultId,
   channels: [],
-  currentChannelId: null,
 });
 
 const channelSlice = createSlice({
@@ -31,7 +32,7 @@ const channelSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchData.fulfilled, (state, { payload }) => {
-        state.channels = payload.channels;
+        channelsStore.setAll(state, payload.channels);
         state.currentChannelId = payload.currentChannelId;
       });
   },

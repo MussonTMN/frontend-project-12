@@ -1,16 +1,18 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import * as yup from 'yup';
 import {
   Row, Col, Container, Card, Button, Form,
 } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/index.js';
 import routes from '../routes.js';
 import LoginImage from '../assets/loginImg.jpg';
 
 const LoginPage = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
   const { loginPath } = routes;
   const inputRef = useRef();
@@ -24,9 +26,9 @@ const LoginPage = () => {
       password: '',
     },
 
-    validationSchema: Yup.object({
-      username: Yup.string().required(),
-      password: Yup.string().required(),
+    validationSchema: yup.object({
+      username: yup.string().required(t('loginPage.required')),
+      password: yup.string().required(t('loginPage.required')),
     }),
 
     onSubmit: async (values) => {
@@ -35,7 +37,7 @@ const LoginPage = () => {
       try {
         const response = await axios.post(loginPath(), { username, password });
         localStorage.setItem('userId', JSON.stringify(response.data));
-        auth.logIn();
+        auth.logIn(response.data);
         const { from } = location.state || { from: { pathname: '/' } };
         navigate(from);
       } catch (error) {
@@ -68,7 +70,7 @@ const LoginPage = () => {
                 />
               </div>
               <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
-                <h1 className="text-center mb-4">Войти</h1>
+                <h1 className="text-center mb-4">{t('loginPage.login')}</h1>
                 <Form.Group className="form-floating mb-3">
                   <Form.Label htmlFor="username" />
                   <Form.Control
@@ -77,7 +79,7 @@ const LoginPage = () => {
                     value={formik.values.username}
                     onBlur={formik.handleBlur}
                     disabled={formik.isSubmitting}
-                    placeholder="Ваш ник"
+                    placeholder={t('loginPage.username')}
                     name="username"
                     id="username"
                     autoComplete="username"
@@ -94,7 +96,7 @@ const LoginPage = () => {
                     value={formik.values.password}
                     onBlur={formik.handleBlur}
                     disabled={formik.isSubmitting}
-                    placeholder="Пароль"
+                    placeholder={t('loginPage.password')}
                     name="password"
                     id="password"
                     autoComplete="current-password"
@@ -102,14 +104,14 @@ const LoginPage = () => {
                     required
                     ref={inputRef}
                   />
-                  <Form.Control.Feedback type="invalid" tooltip>Неверные имя пользователя или пароль</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid" tooltip>{t('loginPage.authFailed')}</Form.Control.Feedback>
                 </Form.Group>
-                <Button type="submit" disabled={formik.isSubmitting} variant="outline-primary" className="w-100 mb-3">Войти</Button>
+                <Button type="submit" disabled={formik.isSubmitting} variant="outline-primary" className="w-100 mb-3">{t('loginPage.login')}</Button>
               </Form>
             </Card.Body>
             <Card.Footer className="p-4">
               <div className="text-center">
-                <span>Нет аккаунта?</span>
+                <span>{t('loginPage.noAccount')}</span>
               </div>
             </Card.Footer>
           </Card>

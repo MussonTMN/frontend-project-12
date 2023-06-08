@@ -6,7 +6,7 @@ import {
   Link,
 } from 'react-router-dom';
 import { Button, Navbar, Container } from 'react-bootstrap';
-
+import { useTranslation } from 'react-i18next';
 import LoginPage from './LoginPage.jsx';
 import ErrorPage from './ErrorPage.jsx';
 import PrivatePage from './PrivatePage.jsx';
@@ -15,11 +15,12 @@ import AuthProvider from '../contexts/AuthProvider.jsx';
 import getRoute from '../routes.js';
 
 const AuthButton = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
 
   return (
     auth.loggedIn
-      ? <Button onClick={auth.logOut}>Выйти</Button>
+      ? <Button onClick={auth.logOut}>{t('header.logout')}</Button>
       : null
   );
 };
@@ -38,7 +39,6 @@ const App = () => (
         <Route path="*" element={<ErrorPage />} />
         <Route path={getRoute.chatPagePath()} element={(<PrivatePage />)} />
       </Routes>
-
     </Router>
   </AuthProvider>
 );

@@ -1,23 +1,71 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Col, Button } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  Col, Button, Nav, Dropdown, ButtonGroup,
+} from 'react-bootstrap';
 import { PlusSquare } from 'react-bootstrap-icons';
-import { getChannels } from '../../slices/selectors.js';
+import { useTranslation } from 'react-i18next';
+import { getChannels, getCurrentChannelId } from '../../slices/selectors.js';
+import { actions as channelsActions } from '../../slices/channelsInfo.js';
+import { actions as modalsActions } from '../../slices/modalsInfo.js';
 
 const Channels = () => {
-//   const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
   const channels = useSelector(getChannels);
+  const currentId = useSelector(getCurrentChannelId);
 
-  console.log(channels);
+  const renderChannels = () => (
+    <Nav as="ul" fill variant="pills" className="d-flex flex-column px-2">
+      {channels.map((channel) => (
+        <Nav.Item as="li" key={channel.id} className="w-100">
+          <Dropdown as={ButtonGroup} className="w-100">
+            <Button
+              variant={channel.id === currentId ? 'primary' : 'light'}
+              className="w-100 rounded-0 text-start"
+              onClick={() => dispatch(channelsActions.setCurrentChannel(channel.id))}
+            >
+              <span className="me-1">#</span>
+              {channel.name}
+            </Button>
+            <Dropdown.Toggle
+              split
+              variant={channel.id === currentId ? 'secondary' : 'light'}
+              className="w-100 rounded-0 text-start text-truncate"
+            >
+              <span className="visually-hidden">{t('chat.channelControl')}</span>
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item
+                onClick={() => console.log(t('chat.rename'))}
+              >
+                {t('chat.rename')}
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => console.log(t('chat.delete'))}
+              >
+                {t('chat.delete')}
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Nav.Item>
+      ))}
+    </Nav>
+  );
 
   return (
     <Col md={2} className="col-4 border-end px-0 bg-light flex-column h-100 d-flex">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
-        <b>Каналы</b>
-        <Button variant="text-primary" className="p-0 btn-group-vertical">
+        <b>{t('chat.channels')}</b>
+        <Button
+          variant="text-primary"
+          className="p-0 btn-group-vertical"
+          onClick={() => dispatch(modalsActions.showModal({ type: 'add' }))}
+        >
           <PlusSquare color="blue" />
         </Button>
       </div>
+      {renderChannels()}
     </Col>
   );
 };

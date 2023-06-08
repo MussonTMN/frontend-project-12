@@ -1,7 +1,5 @@
 const apiPath = '/api/v1';
 
-export const baseUrl = apiPath;
-
 export const api = {
   loginPath: () => '/login',
   signupPath: () => '/signup',
