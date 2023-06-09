@@ -17,13 +17,21 @@ const ChatPage = () => {
 
   const type = useSelector(getModalType);
 
+  const renderModal = (channelType) => {
+    if (channelType === null) {
+      return null;
+    }
+    const Modal = getModal(channelType);
+    return <Modal />;
+  };
+
   return (
     <Container className="h-100 m-4 overwflow-hidden rounded shadow">
       <Row className="h-100 bg-white flex-md-row">
         <Channels />
         <Messages />
       </Row>
-      {getModal(type)}
+      {renderModal(type)}
     </Container>
   );
 };

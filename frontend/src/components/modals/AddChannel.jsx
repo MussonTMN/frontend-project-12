@@ -36,14 +36,14 @@ const AddChannel = () => {
     validationSchema,
     onSubmit: (values) => {
       const { name } = values;
-      chatApi.AddChannel({ name });
-      dispatch(modalsActions.hideModal);
+      chatApi.addChannel(name);
+      dispatch(modalsActions.hideModal());
     },
   });
 
   return (
-    <Modal centered>
-      <Modal.Header closeButton>
+    <Modal show centered>
+      <Modal.Header closeButton onHide={() => dispatch(modalsActions.hideModal())}>
         <Modal.Title className="h-4">{t('modals.add')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>

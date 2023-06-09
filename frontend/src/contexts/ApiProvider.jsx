@@ -15,7 +15,7 @@ const api = (socket) => {
     }
   });
 
-  const addChannel = (channel) => socket.emit('newChannel', channel, (response) => {
+  const addChannel = (name) => socket.emit('newChannel', { name }, (response) => {
     if (response.status !== 'ok') {
       console.error(response);
     } else {
@@ -40,7 +40,6 @@ const api = (socket) => {
       console.error(response);
     } else {
       socket.on('renameChannel', (payload) => {
-        console.log(response);
         store.dispatch(channelsActions.renameChannel(payload));
       });
     }

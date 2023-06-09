@@ -8,3 +8,4 @@ export const getMessages = (state) => messagesSelectors.selectAll(state);
 export const getCurrentChannelId = (state) => state.channelsInfo.currentChannelId;
 export const getCurrentChannel = (state) => selectById(state, getCurrentChannelId(state));
 export const getModalType = (state) => state.modalsInfo.type;
+export const getSelectedId = (state) => state.modalsInfo.selectedId;

@@ -1,9 +1,11 @@
 import AddChannel from './AddChannel';
+import RemoveChannel from './RemoveChannel';
+import RenameChannel from './RenameChannel';
 
 const modals = {
   add: AddChannel,
-  remove: null,
-  rename: null,
+  remove: RemoveChannel,
+  rename: RenameChannel,
 };
 
 const getModal = (type) => modals[type];

@@ -2,9 +2,8 @@ import React, { useState, useCallback, useMemo } from 'react';
 import { AuthContext } from './index.js';
 
 const AuthProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(false);
-
   const currentUser = JSON.parse(localStorage.getItem('userId'));
+  const [loggedIn, setLoggedIn] = useState(!!currentUser);
   const [user, setUser] = useState(currentUser ? { username: currentUser.username } : null);
 
   const logIn = useCallback((userData) => {

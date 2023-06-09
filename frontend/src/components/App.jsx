@@ -35,9 +35,9 @@ const App = () => (
         </Container>
       </Navbar>
       <Routes>
+        <Route path={getRoute.chatPagePath()} element={(<PrivatePage />)} />
         <Route path={getRoute.loginPagePath()} element={<LoginPage />} />
         <Route path="*" element={<ErrorPage />} />
-        <Route path={getRoute.chatPagePath()} element={(<PrivatePage />)} />
       </Routes>
     </Router>
   </AuthProvider>

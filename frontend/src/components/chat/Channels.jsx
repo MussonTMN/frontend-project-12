@@ -19,35 +19,47 @@ const Channels = () => {
     <Nav as="ul" fill variant="pills" className="d-flex flex-column px-2">
       {channels.map((channel) => (
         <Nav.Item as="li" key={channel.id} className="w-100">
-          <Dropdown as={ButtonGroup} className="w-100">
+          {channel.removable ? (
+            <Dropdown as={ButtonGroup} className="w-100">
+              <Button
+                variant={channel.id === currentId ? 'secondary' : 'light'}
+                className="w-100 rounded-0 text-start text-truncate"
+                onClick={() => dispatch(channelsActions.setCurrentChannel(channel.id))}
+              >
+                <span className="me-1">#</span>
+                {channel.name}
+              </Button>
+              <Dropdown.Toggle
+                split
+                variant={channel.id === currentId ? 'secondary' : 'light'}
+                className="flex-grow-0"
+                aria-expanded="false"
+              >
+                <span className="visually-hidden">{t('chat.channelControl')}</span>
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item
+                  onClick={() => dispatch(modalsActions.showModal({ type: 'rename', selectedId: channel.id }))}
+                >
+                  {t('chat.rename')}
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => dispatch(modalsActions.showModal({ type: 'remove', selectedId: channel.id }))}
+                >
+                  {t('chat.delete')}
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          ) : (
             <Button
-              variant={channel.id === currentId ? 'primary' : 'light'}
-              className="w-100 rounded-0 text-start"
+              variant={channel.id === currentId ? 'secondary' : 'light'}
+              className="w-100 rounded-0 text-start text-truncate"
               onClick={() => dispatch(channelsActions.setCurrentChannel(channel.id))}
             >
               <span className="me-1">#</span>
               {channel.name}
             </Button>
-            <Dropdown.Toggle
-              split
-              variant={channel.id === currentId ? 'secondary' : 'light'}
-              className="w-100 rounded-0 text-start text-truncate"
-            >
-              <span className="visually-hidden">{t('chat.channelControl')}</span>
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item
-                onClick={() => console.log(t('chat.rename'))}
-              >
-                {t('chat.rename')}
-              </Dropdown.Item>
-              <Dropdown.Item
-                onClick={() => console.log(t('chat.delete'))}
-              >
-                {t('chat.delete')}
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+          )}
         </Nav.Item>
       ))}
     </Nav>
