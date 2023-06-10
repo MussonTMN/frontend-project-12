@@ -74,7 +74,11 @@ const Channels = () => {
           className="p-0 btn-group-vertical"
           onClick={() => dispatch(modalsActions.showModal({ type: 'add' }))}
         >
-          <PlusSquare color="blue" />
+          <PlusSquare
+            size={20}
+            color="royalBlue"
+          />
+          <span className="visually-hidden">+</span>
         </Button>
       </div>
       {renderChannels()}
