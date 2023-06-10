@@ -10,7 +10,7 @@ const ru = {
       required: 'Обязательное поле',
       authFailed: 'Неверные имя пользователя или пароль',
       noAccount: 'Нет аккаунта?',
-      registration: 'Регистрация',
+      signup: 'Регистрация',
     },
     chat: {
       channels: 'Каналы',
@@ -39,6 +39,14 @@ const ru = {
       renameChannel: 'Переименовать канал',
       remove: 'Удалить',
       sure: 'Уверены?',
+    },
+    signupPage: {
+      signup: 'Зарегистрироваться',
+      username: 'Имя пользователя',
+      password: 'Пароль',
+      confirmPassword: 'Подтвердите пароль',
+      limit: 'Не менее 6 символов',
+      match: 'Пароли должны совпадать',
     },
   },
 };

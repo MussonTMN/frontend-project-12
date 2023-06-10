@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import LoginPage from './LoginPage.jsx';
 import ErrorPage from './ErrorPage.jsx';
 import PrivatePage from './PrivatePage.jsx';
+import SignupPage from './SignupPage.jsx';
 import { useAuth } from '../hooks/index.js';
 import AuthProvider from '../contexts/AuthProvider.jsx';
 import getRoute from '../routes.js';
@@ -37,6 +38,7 @@ const App = () => (
       <Routes>
         <Route path={getRoute.chatPagePath()} element={(<PrivatePage />)} />
         <Route path={getRoute.loginPagePath()} element={<LoginPage />} />
+        <Route path={getRoute.signupPagePath()} element={<SignupPage />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </Router>

@@ -27,8 +27,8 @@ const LoginPage = () => {
     },
 
     validationSchema: yup.object({
-      username: yup.string().required(t('loginPage.required')),
-      password: yup.string().required(t('loginPage.required')),
+      username: yup.string().trim().required(t('loginPage.required')),
+      password: yup.string().trim().required(t('loginPage.required')),
     }),
 
     onSubmit: async (values) => {
@@ -42,7 +42,7 @@ const LoginPage = () => {
         navigate(from);
       } catch (error) {
         formik.setSubmitting(false);
-        if (error.isAxiosError && error.response.status === 401) {
+        if (error.isAxiosError && error.response.status === 409) {
           setAuthFailed(true);
           inputRef.current.select();
           return;
@@ -65,14 +65,13 @@ const LoginPage = () => {
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                 <img
                   src={LoginImage}
-                  className="roundedCircle"
-                  alt="Войти"
+                  className="rounded-circle"
+                  alt={t('loginPage.login')}
                 />
               </div>
               <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
                 <h1 className="text-center mb-4">{t('loginPage.login')}</h1>
                 <Form.Group className="form-floating mb-3">
-                  <Form.Label htmlFor="username" />
                   <Form.Control
                     type="text"
                     onChange={formik.handleChange}
@@ -87,9 +86,9 @@ const LoginPage = () => {
                     required
                     ref={inputRef}
                   />
+                  <Form.Label htmlFor="username">{t('loginPage.username')}</Form.Label>
                 </Form.Group>
                 <Form.Group className="form-floating mb-4">
-                  <Form.Label htmlFor="username" />
                   <Form.Control
                     type="password"
                     onChange={formik.handleChange}
@@ -104,6 +103,7 @@ const LoginPage = () => {
                     required
                     ref={inputRef}
                   />
+                  <Form.Label htmlFor="password">{t('loginPage.password')}</Form.Label>
                   <Form.Control.Feedback type="invalid" tooltip>{t('loginPage.authFailed')}</Form.Control.Feedback>
                 </Form.Group>
                 <Button type="submit" disabled={formik.isSubmitting} variant="outline-primary" className="w-100 mb-3">{t('loginPage.login')}</Button>
@@ -112,6 +112,8 @@ const LoginPage = () => {
             <Card.Footer className="p-4">
               <div className="text-center">
                 <span>{t('loginPage.noAccount')}</span>
+                {' '}
+                <a href="/signup">{t('loginPage.signup')}</a>
               </div>
             </Card.Footer>
           </Card>
