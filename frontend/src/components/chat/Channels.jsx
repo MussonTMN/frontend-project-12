@@ -39,14 +39,14 @@ const Channels = () => {
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item
-                  onClick={() => dispatch(modalsActions.showModal({ type: 'rename', selectedId: channel.id }))}
-                >
-                  {t('chat.rename')}
-                </Dropdown.Item>
-                <Dropdown.Item
                   onClick={() => dispatch(modalsActions.showModal({ type: 'remove', selectedId: channel.id }))}
                 >
                   {t('chat.delete')}
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => dispatch(modalsActions.showModal({ type: 'rename', selectedId: channel.id }))}
+                >
+                  {t('chat.rename')}
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
