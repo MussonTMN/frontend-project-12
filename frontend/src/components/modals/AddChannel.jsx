@@ -47,6 +47,8 @@ const AddChannel = () => {
     },
   });
 
+  filter.done();
+
   return (
     <Modal show centered>
       <Modal.Header closeButton onHide={() => dispatch(modalsActions.hideModal())}>

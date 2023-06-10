@@ -22,13 +22,13 @@ const init = async (socket) => {
     });
 
   const rollbarConfig = {
-    accessToken: process.env.REACT_APP_ACCESS_TOKEN,
+    accessToken: 'fca7764b2bff44e6bef85375394d3335',
+    environment: 'production',
     captureUncaught: true,
     captureUnhandledRejections: true,
-    payload: {
-      environment: process.env.NODE_ENV,
-    },
   };
+
+  console.log(process.env);
 
   return (
     <RollbarProvider config={rollbarConfig}>
