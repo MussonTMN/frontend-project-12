@@ -7,6 +7,7 @@ import {
 } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useAuth } from '../hooks/index.js';
 import routes from '../routes.js';
 import LoginImage from '../assets/loginImg.jpg';
@@ -42,11 +43,12 @@ const LoginPage = () => {
         navigate(from);
       } catch (error) {
         formik.setSubmitting(false);
-        if (error.isAxiosError && error.response.status === 409) {
+        if (error.isAxiosError && error.response.status === 401) {
           setAuthFailed(true);
           inputRef.current.select();
           return;
         }
+        toast.error(t('errors.network'));
         throw error;
       }
     },

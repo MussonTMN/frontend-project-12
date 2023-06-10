@@ -7,6 +7,7 @@ import {
 } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useAuth } from '../hooks/index.js';
 import routes from '../routes.js';
 import signupImage from '../assets/signupImg.jpg';
@@ -45,11 +46,13 @@ const SignupPage = () => {
         console.error(error);
         setSignupFailed(true);
         formik.setSubmitting(false);
-        if (error.isAxiosError && error.response.status === 401) {
+        if (error.isAxiosError && error.response.status === 409) {
           setSignupFailed(true);
           inputRef.current.select();
+          toast.error(t('errors.network'));
           return;
         }
+        toast.error(t('errors.unknown'));
         throw error;
       }
     },

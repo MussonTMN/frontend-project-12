@@ -15,6 +15,9 @@ const init = async (socket) => {
     .init({
       resources,
       fallbackLng: 'ru',
+      interpolation: {
+        escapeValue: false,
+      },
     });
 
   return (

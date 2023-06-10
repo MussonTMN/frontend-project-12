@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Modal, Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import { useApi } from '../../hooks/index.js';
 import { getSelectedId } from '../../slices/selectors.js';
 import { actions as modalsActions } from '../../slices/modalsInfo.js';
@@ -15,6 +16,7 @@ const RemoveChannel = () => {
   const handleRemove = (channelId) => {
     chatApi.removeChannel(channelId);
     dispatch(modalsActions.hideModal());
+    toast.success(t('modals.removeSuccess'));
   };
 
   return (

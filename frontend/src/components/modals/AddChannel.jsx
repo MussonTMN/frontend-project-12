@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import * as yup from 'yup';
+import { toast } from 'react-toastify';
 import { useApi } from '../../hooks/index.js';
 import { getChannels } from '../../slices/selectors.js';
 import { actions as modalsActions } from '../../slices/modalsInfo.js';
@@ -38,6 +39,7 @@ const AddChannel = () => {
       const { name } = values;
       chatApi.addChannel(name);
       dispatch(modalsActions.hideModal());
+      toast.success(t('modals.addSuccess'));
     },
   });
 

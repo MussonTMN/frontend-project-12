@@ -39,6 +39,9 @@ const ru = {
       renameChannel: 'Переименовать канал',
       remove: 'Удалить',
       sure: 'Уверены?',
+      addSuccess: 'Канал создан',
+      removeSuccess: 'Канал удален',
+      renameSuccess: 'Канал переименован',
     },
     signupPage: {
       signup: 'Зарегистрироваться',
@@ -52,6 +55,10 @@ const ru = {
       notFound: 'Страница не найдена',
       redirect: 'Но вы можете перейти',
       toMainPage: 'на главную страницу',
+    },
+    errors: {
+      network: 'Ошибка соединения',
+      unknown: 'Неизвестная ошибка',
     },
   },
 };
