@@ -32,8 +32,7 @@ const Channels = () => {
               <Dropdown.Toggle
                 split
                 variant={channel.id === currentId ? 'secondary' : 'light'}
-                className="flex-grow-0"
-                aria-expanded="false"
+                className="flex-grow-0 text-end"
               >
                 <span className="visually-hidden">{t('chat.channelControl')}</span>
               </Dropdown.Toggle>

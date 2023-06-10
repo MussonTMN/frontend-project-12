@@ -40,7 +40,7 @@ const ru = {
       remove: 'Удалить',
       sure: 'Уверены?',
       addSuccess: 'Канал создан',
-      removeSuccess: 'Канал удален',
+      removeSuccess: 'Канал удалён',
       renameSuccess: 'Канал переименован',
     },
     signupPage: {
