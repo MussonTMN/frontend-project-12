@@ -9,6 +9,10 @@ import { useApi } from '../../hooks/index.js';
 import { getChannels } from '../../slices/selectors.js';
 import { actions as modalsActions } from '../../slices/modalsInfo.js';
 
+const filter = require('leo-profanity');
+
+filter.add(filter.getDictionary('ru'));
+
 const AddChannel = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -56,7 +60,7 @@ const AddChannel = () => {
             onChange={formik.handleChange}
             id="name"
             name="name"
-            value={formik.values.name}
+            value={filter.clean(formik.values.name)}
             isInvalid={formik.errors.name}
           />
           <Form.Label htmlFor="name" className="visually-hidden">{t('modals.name')}</Form.Label>

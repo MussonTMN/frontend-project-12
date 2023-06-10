@@ -9,6 +9,10 @@ import { useApi } from '../../hooks/index.js';
 import { getChannels, getSelectedId } from '../../slices/selectors.js';
 import { actions as modalsActions } from '../../slices/modalsInfo.js';
 
+const filter = require('leo-profanity');
+
+filter.add(filter.getDictionary('ru'));
+
 const RenameChannel = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -39,6 +43,8 @@ const RenameChannel = () => {
     validationSchema,
     onSubmit: (values) => {
       const { name } = values;
+
+      chatApi.addChannel(name);
       chatApi.renameChannel({ id: selectedId, name });
       dispatch(modalsActions.hideModal());
       toast.success(t('modals.renameSuccess'));
@@ -58,7 +64,7 @@ const RenameChannel = () => {
             onChange={formik.handleChange}
             id="name"
             name="name"
-            value={formik.values.name}
+            value={filter.clean(formik.values.name)}
             isInvalid={formik.errors.name}
           />
           <Form.Label htmlFor="name" className="visually-hidden">{t('modals.name')}</Form.Label>

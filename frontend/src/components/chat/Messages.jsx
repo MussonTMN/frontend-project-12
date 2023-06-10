@@ -10,6 +10,10 @@ import { useTranslation } from 'react-i18next';
 import { getCurrentChannel, getCurrentChannelId, getMessages } from '../../slices/selectors.js';
 import { useApi, useAuth } from '../../hooks/index.js';
 
+const filter = require('leo-profanity');
+
+filter.add(filter.getDictionary('ru'));
+
 const Messages = () => {
   const { t } = useTranslation();
   const inputRef = useRef();
@@ -33,8 +37,9 @@ const Messages = () => {
       const { body } = values;
       const { username } = user;
       const channelId = currentChannelId;
+      const cleanedBody = filter.clean(body);
       const data = {
-        body,
+        body: cleanedBody,
         channelId,
         username,
       };
