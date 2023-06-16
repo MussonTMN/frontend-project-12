@@ -35,12 +35,6 @@ const channelSlice = createSlice({
         state.currentChannelId = defaultId;
       }
     },
-    // renameChannel: (state, { payload }) => {
-    //   const { id } = payload;
-    //   const index = state.channels.findIndex((channel) => channel.id === id);
-    //   console.log(index);
-    //   channelsStore.updateOne(state, id);
-    // },
     renameChannel: channelsStore.updateOne,
   },
   extraReducers: (builder) => {
