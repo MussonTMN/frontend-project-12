@@ -17,4 +17,5 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Run linter
+        working-directory: ./frontend-project-12/frontend
         run: npx eslint .
