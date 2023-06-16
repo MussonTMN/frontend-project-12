@@ -43,8 +43,6 @@ const RenameChannel = () => {
     validationSchema,
     onSubmit: (values) => {
       const { name } = values;
-
-      chatApi.addChannel(name);
       chatApi.renameChannel({ id: selectedId, name });
       dispatch(modalsActions.hideModal());
       toast.success(t('modals.renameSuccess'));

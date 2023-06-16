@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import cn from 'classnames';
 import { getCurrentChannel, getCurrentChannelId, getMessages } from '../../slices/selectors.js';
 import { useApi, useAuth } from '../../hooks/index.js';
 
@@ -36,6 +37,7 @@ const Messages = () => {
     onSubmit: (values) => {
       const { body } = values;
       const { username } = user;
+      console.log(username);
       const channelId = currentChannelId;
       const cleanedBody = filter.clean(body);
       const data = {
@@ -65,7 +67,12 @@ const Messages = () => {
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5 ">
           {messages.map((message) => (
-            <div key={message.id} className="text-break mb-2">
+            <div
+              key={message.id}
+              className={cn('text-break', 'mb-2', {
+                'text-end': user.username === message.username,
+              })}
+            >
               <b>{message.username}</b>
               :
               {' '}

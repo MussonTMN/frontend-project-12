@@ -16,7 +16,7 @@ const Channels = () => {
   const currentId = useSelector(getCurrentChannelId);
 
   const renderChannels = () => (
-    <Nav as="ul" fill variant="pills" className="d-flex flex-column px-2">
+    <Nav id="channels-box" as="ul" fill variant="pills" className="flex-column px-2 mb-2 overflow-auto h-100 d-block">
       {channels.map((channel) => (
         <Nav.Item as="li" key={channel.id} className="w-100">
           {channel.removable ? (

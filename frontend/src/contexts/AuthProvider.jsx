@@ -1,6 +1,16 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { AuthContext } from './index.js';
 
+export const getAuthHeader = () => {
+  const userId = JSON.parse(localStorage.getItem('userId'));
+
+  if (userId && userId.token) {
+    return { Authorization: `Bearer ${userId.token}` };
+  }
+
+  return {};
+};
+
 const AuthProvider = ({ children }) => {
   const currentUser = JSON.parse(localStorage.getItem('userId'));
   const [loggedIn, setLoggedIn] = useState(!!currentUser);
@@ -18,26 +28,14 @@ const AuthProvider = ({ children }) => {
     setUser(null);
   }, []);
 
-  const getAuthHeader = useCallback(() => {
-    const userId = JSON.parse(localStorage.getItem('userId'));
-
-    if (userId && userId.token) {
-      return { Authorization: `Bearer ${userId.token}` };
-    }
-
-    logOut();
-    return {};
-  }, [logOut]);
-
   const providedData = useMemo(
     () => ({
       user,
       loggedIn,
       logIn,
       logOut,
-      getAuthHeader,
     }),
-    [user, loggedIn, logIn, logOut, getAuthHeader],
+    [user, loggedIn, logIn, logOut],
   );
 
   return (

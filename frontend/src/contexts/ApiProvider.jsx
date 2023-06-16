@@ -40,7 +40,14 @@ const api = (socket) => {
       console.error(response);
     } else {
       socket.on('renameChannel', (payload) => {
-        store.dispatch(channelsActions.renameChannel(payload));
+        const { name, id } = payload;
+        console.log(payload);
+        store.dispatch(channelsActions.renameChannel({
+          id,
+          changes: {
+            name,
+          },
+        }));
       });
     }
   });

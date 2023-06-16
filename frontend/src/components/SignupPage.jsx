@@ -39,6 +39,7 @@ const SignupPage = () => {
       setSignupFailed(false);
       try {
         const response = await axios.post(signupPath(), { username, password });
+        localStorage.setItem('userId', JSON.stringify(response.data));
         auth.logIn(response.data);
         const { from } = location.state || { from: { pathname: '/' } };
         navigate(from);
@@ -130,7 +131,7 @@ const SignupPage = () => {
                     required
                     ref={inputRef}
                   />
-                  <Form.Control.Feedback type="invalid" tooltip>{formik.errors.confirmPassword}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid" tooltip>{formik.errors.confirmPassword || t('errors.user')}</Form.Control.Feedback>
                   <Form.Label htmlFor="confirmPassword">{t('signupPage.confirmPassword')}</Form.Label>
                 </Form.Group>
                 <Button type="submit" disabled={formik.isSubmitting} variant="outline-primary" className="w-100 mb-3">{t('signupPage.signup')}</Button>
