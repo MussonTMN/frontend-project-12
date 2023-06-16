@@ -16,6 +16,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+      - name: npm install, build
+        run: |
+          make install
+          make build
+        env:
+          CI: true
       - name: Run linter
-        working-directory: ./frontend-project-12/frontend
-        run: npx eslint .
+        run: make lint
