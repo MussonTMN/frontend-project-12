@@ -26,7 +26,7 @@ const ChatPage = () => {
   };
 
   return (
-    <Container className="h-100 m-4 overwflow-hidden rounded shadow">
+    <Container className="h-100 m-4 overflow-hidden rounded shadow">
       <Row className="h-100 bg-white flex-md-row">
         <Channels />
         <Messages />

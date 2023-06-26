@@ -24,7 +24,10 @@ const channelSlice = createSlice({
   name: 'channelsInfo',
   initialState,
   reducers: {
-    addChannel: channelsStore.addOne,
+    addChannel: (state, { payload }) => {
+      channelsStore.addOne(state, payload);
+      state.currentChannelId = payload.id;
+    },
     setCurrentChannel: (state, { payload }) => {
       state.currentChannelId = payload;
     },
@@ -48,5 +51,5 @@ const channelSlice = createSlice({
 
 export const { actions } = channelSlice;
 export default channelSlice.reducer;
-export { fetchData };
 export const selectors = channelsStore.getSelectors((state) => state.channelsInfo);
+export { fetchData };

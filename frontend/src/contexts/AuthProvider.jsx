@@ -3,7 +3,6 @@ import { AuthContext } from './index.js';
 
 export const getAuthHeader = () => {
   const userId = JSON.parse(localStorage.getItem('userId'));
-
   if (userId && userId.token) {
     return { Authorization: `Bearer ${userId.token}` };
   }
@@ -18,7 +17,7 @@ const AuthProvider = ({ children }) => {
 
   const logIn = useCallback((userData) => {
     setLoggedIn(true);
-    localStorage.setItem('user', JSON.stringify(userData));
+    localStorage.setItem('userId', JSON.stringify(userData));
     setUser({ username: userData.username });
   }, []);
 

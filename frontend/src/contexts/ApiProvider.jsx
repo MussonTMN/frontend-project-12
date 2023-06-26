@@ -1,33 +1,7 @@
 import React, { useMemo } from 'react';
-import store from '../slices/index.js';
 import { ApiContext } from './index.js';
-import { actions as channelsActions } from '../slices/channelsInfo.js';
-import { actions as messageActions } from '../slices/messagesInfo.js';
 
 const api = (socket) => {
-  socket.on('newMessage', (payload) => {
-    store.dispatch(messageActions.addMessage(payload));
-  });
-
-  socket.on('newChannel', (payload) => {
-    store.dispatch(channelsActions.addChannel(payload));
-  });
-
-  socket.on('removeChannel', (payload) => {
-    store.dispatch(channelsActions.deleteChannel(payload));
-  });
-
-  socket.on('renameChannel', (payload) => {
-    const { name, id } = payload;
-    console.log(payload);
-    store.dispatch(channelsActions.renameChannel({
-      id,
-      changes: {
-        name,
-      },
-    }));
-  });
-
   const addMessage = (message) => socket.emit('newMessage', message, (response) => {
     if (response.status !== 'ok') {
       console.error(response);

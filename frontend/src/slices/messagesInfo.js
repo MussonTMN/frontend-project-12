@@ -12,12 +12,14 @@ const messageSlice = createSlice({
   name: 'messagesInfo',
   initialState,
   reducers: {
-    addMessage: messagesStore.addOne,
+    addMessage: (state, { payload }) => {
+      messagesStore.addOne(state, payload);
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchData.fulfilled, (state, { payload }) => {
-        state.messages = payload.messages;
+        messagesStore.addMany(state, payload.messages);
       })
       .addCase(channelsActions.deleteChannel, (state, { payload }) => {
         const { id } = payload;

@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useAuth } from '../hooks/index.js';
-import routes from '../routes.js';
+import routes, { getPath } from '../routes.js';
 import LoginImage from '../assets/loginImg.jpg';
 
 const LoginPage = () => {
@@ -37,9 +37,8 @@ const LoginPage = () => {
       setAuthFailed(false);
       try {
         const response = await axios.post(loginPath(), { username, password });
-        localStorage.setItem('userId', JSON.stringify(response.data));
         auth.logIn(response.data);
-        const { from } = location.state || { from: { pathname: '/' } };
+        const { from } = location.state || { from: { pathname: getPath.dataPath() } };
         navigate(from);
       } catch (error) {
         formik.setSubmitting(false);
@@ -115,7 +114,7 @@ const LoginPage = () => {
               <div className="text-center">
                 <span>{t('loginPage.noAccount')}</span>
                 {' '}
-                <a href="/signup">{t('loginPage.signup')}</a>
+                <a href={getPath.signupPath()}>{t('loginPage.signup')}</a>
               </div>
             </Card.Footer>
           </Card>

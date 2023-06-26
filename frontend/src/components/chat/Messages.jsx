@@ -28,6 +28,7 @@ const Messages = () => {
   const validationSchema = yup.object().shape({
     body: yup.string().trim().required(),
   });
+  // console.log(messages);
 
   const formik = useFormik({
     initialValues: {
@@ -37,7 +38,6 @@ const Messages = () => {
     onSubmit: (values) => {
       const { body } = values;
       const { username } = user;
-      console.log(username);
       const channelId = currentChannelId;
       const cleanedBody = filter.clean(body);
       const data = {
@@ -52,6 +52,9 @@ const Messages = () => {
 
   useEffect(() => {
     inputRef.current.focus();
+    const messagesBox = document.getElementById('messages-box');
+    const lowScroll = messagesBox.scrollHeight;
+    messagesBox.scrollTop = lowScroll;
   });
 
   return (
@@ -96,6 +99,7 @@ const Messages = () => {
                 value={formik.values.body}
                 ref={inputRef}
                 disabled={formik.isSubmitting}
+                autoComplete="off"
               />
               <Button
                 style={{ border: 'none' }}
