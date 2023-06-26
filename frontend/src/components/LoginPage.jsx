@@ -55,7 +55,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     inputRef.current.focus();
-  }, []);
+  }, [auth.data, navigate]);
 
   return (
     <Container className="h-100" fluid>
