@@ -3,7 +3,7 @@ const apiPath = '/api/v1';
 export const getPath = {
   loginPath: () => '/login',
   signupPath: () => '/signup',
-  dataPath: () => '/data',
+  dataPath: () => '/',
 };
 
 export default {

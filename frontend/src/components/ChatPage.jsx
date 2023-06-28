@@ -1,19 +1,28 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row } from 'react-bootstrap';
-
+import { useNavigate } from 'react-router-dom';
 import { fetchData } from '../slices/channelsInfo.js';
 import Channels from './chat/Channels.jsx';
 import Messages from './chat/Messages.jsx';
-import { getModalType } from '../slices/selectors.js';
+import { getModalType, getStatus } from '../slices/selectors.js';
 import getModal from './modals/index.js';
+import { useAuth } from '../hooks/index.js';
+import getRoute from '../routes.js';
 
 const ChatPage = () => {
   const dispatch = useDispatch();
+  const status = useSelector(getStatus);
+  const auth = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchData());
-  }, [dispatch]);
+    if (status === 'error') {
+      auth.logOut();
+      navigate(getRoute.loginPagePath());
+    }
+  });
 
   const type = useSelector(getModalType);
 

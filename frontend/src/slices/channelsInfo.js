@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign */
-
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { getAuthHeader } from '../contexts/AuthProvider';
@@ -16,6 +14,7 @@ const fetchData = createAsyncThunk(
 const defaultId = 1;
 const channelsStore = createEntityAdapter();
 const initialState = channelsStore.getInitialState({
+  status: 'await',
   currentChannelId: defaultId,
   channels: [],
 });
@@ -45,6 +44,9 @@ const channelSlice = createSlice({
       .addCase(fetchData.fulfilled, (state, { payload }) => {
         channelsStore.setAll(state, payload.channels);
         state.currentChannelId = payload.currentChannelId;
+      })
+      .addCase(fetchData.rejected, (state) => {
+        state.status = 'error';
       });
   },
 });

@@ -62,6 +62,7 @@ const AddChannel = () => {
             name="name"
             value={filter.clean(formik.values.name)}
             isInvalid={formik.errors.name}
+            autoComplete="off"
           />
           <Form.Label htmlFor="name" className="visually-hidden">{t('modals.name')}</Form.Label>
           <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>

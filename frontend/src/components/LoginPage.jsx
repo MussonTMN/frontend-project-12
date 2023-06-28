@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import {
   Row, Col, Container, Card, Button, Form,
 } from 'react-bootstrap';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useAuth } from '../hooks/index.js';
@@ -18,7 +18,6 @@ const LoginPage = () => {
   const { loginPath } = routes;
   const inputRef = useRef();
   const [authFailed, setAuthFailed] = useState(false);
-  const location = useLocation();
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -34,16 +33,17 @@ const LoginPage = () => {
 
     onSubmit: async (values) => {
       const { username, password } = values;
-      setAuthFailed(false);
       try {
         const response = await axios.post(loginPath(), { username, password });
-        auth.logIn(response.data);
-        const { from } = location.state || { from: { pathname: getPath.dataPath() } };
-        navigate(from);
+        if (response.data.token) {
+          auth.logIn(response.data);
+          setAuthFailed(false);
+          navigate(getPath.dataPath());
+        }
       } catch (error) {
         formik.setSubmitting(false);
+        setAuthFailed(true);
         if (error.isAxiosError && error.response.status === 401) {
-          setAuthFailed(true);
           inputRef.current.select();
           return;
         }

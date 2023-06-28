@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Col, Button, Nav, Dropdown, ButtonGroup,
@@ -14,11 +14,17 @@ const Channels = () => {
   const dispatch = useDispatch();
   const channels = useSelector(getChannels);
   const currentId = useSelector(getCurrentChannelId);
+  const activeButtonRef = useRef();
+
+  useEffect(() => {
+    const channelsBox = document.getElementById('channels-box');
+    activeButtonRef.current?.scrollIntoView(channelsBox);
+  }, []);
 
   const renderChannels = () => (
     <Nav id="channels-box" as="ul" fill variant="pills" className="flex-column px-2 mb-2 overflow-auto h-100 d-block">
       {channels.map((channel) => (
-        <Nav.Item as="li" key={channel.id} className="w-100">
+        <Nav.Item as="li" key={channel.id} className="w-100" ref={channel.id === currentId ? activeButtonRef : null}>
           {channel.removable ? (
             <Dropdown as={ButtonGroup} className="w-100">
               <Button

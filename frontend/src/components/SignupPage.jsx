@@ -39,9 +39,9 @@ const SignupPage = () => {
       setSignupFailed(false);
       try {
         const response = await axios.post(signupPath(), { username, password });
-        localStorage.setItem('userId', JSON.stringify(response.data));
+        localStorage.setItem('user', JSON.stringify(response.data));
         auth.logIn(response.data);
-        const { from } = location.state || { from: { pathname: '/' } };
+        const { from } = location.state || { from: { pathname: routes.chatPagePath() } };
         navigate(from);
       } catch (error) {
         console.error(error);

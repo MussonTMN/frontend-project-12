@@ -2,27 +2,26 @@ import React, { useState, useCallback, useMemo } from 'react';
 import { AuthContext } from './index.js';
 
 export const getAuthHeader = () => {
-  const userId = JSON.parse(localStorage.getItem('userId'));
+  const userId = JSON.parse(localStorage.getItem('user'));
   if (userId && userId.token) {
     return { Authorization: `Bearer ${userId.token}` };
   }
-
   return {};
 };
 
 const AuthProvider = ({ children }) => {
-  const currentUser = JSON.parse(localStorage.getItem('userId'));
+  const currentUser = JSON.parse(localStorage.getItem('user'));
   const [loggedIn, setLoggedIn] = useState(!!currentUser);
   const [user, setUser] = useState(currentUser ? { username: currentUser.username } : null);
 
   const logIn = useCallback((userData) => {
     setLoggedIn(true);
-    localStorage.setItem('userId', JSON.stringify(userData));
+    localStorage.setItem('user', JSON.stringify(userData));
     setUser({ username: userData.username });
   }, []);
 
   const logOut = useCallback(() => {
-    localStorage.removeItem('userId');
+    localStorage.clear();
     setLoggedIn(false);
     setUser(null);
   }, []);

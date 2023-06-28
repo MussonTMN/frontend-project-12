@@ -9,3 +9,4 @@ export const getCurrentChannelId = (state) => state.channelsInfo.currentChannelI
 export const getCurrentChannel = (state) => selectById(state, getCurrentChannelId(state));
 export const getModalType = (state) => state.modalsInfo.type;
 export const getSelectedId = (state) => state.modalsInfo.selectedId;
+export const getStatus = (state) => state.channelsInfo.status;

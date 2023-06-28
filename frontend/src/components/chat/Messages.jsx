@@ -28,7 +28,6 @@ const Messages = () => {
   const validationSchema = yup.object().shape({
     body: yup.string().trim().required(),
   });
-  // console.log(messages);
 
   const formik = useFormik({
     initialValues: {
