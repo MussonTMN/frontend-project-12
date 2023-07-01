@@ -29,7 +29,6 @@ const init = async () => {
 
   socket.on('renameChannel', (payload) => {
     const { name, id } = payload;
-    console.log(payload);
     store.dispatch(channelsActions.renameChannel({
       id,
       changes: {
