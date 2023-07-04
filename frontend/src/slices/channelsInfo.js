@@ -16,7 +16,7 @@ const fetchData = createAsyncThunk(
 const defaultId = 1;
 const channelsStore = createEntityAdapter();
 const initialState = channelsStore.getInitialState({
-  status: 'await',
+  status: 'init',
   currentChannelId: defaultId,
   channels: [],
 });
@@ -27,7 +27,6 @@ const channelSlice = createSlice({
   reducers: {
     addChannel: (state, { payload }) => {
       channelsStore.addOne(state, payload);
-      state.currentChannelId = payload.id;
     },
     setCurrentChannel: (state, { payload }) => {
       state.currentChannelId = payload;
@@ -45,7 +44,7 @@ const channelSlice = createSlice({
     builder
       .addCase(fetchData.fulfilled, (state, { payload }) => {
         channelsStore.setAll(state, payload.channels);
-        state.currentChannelId = payload.currentChannelId;
+        state.status = 'fulfilled';
       })
       .addCase(fetchData.rejected, (state) => {
         state.status = 'error';

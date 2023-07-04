@@ -41,9 +41,8 @@ const AddChannel = () => {
     validationSchema,
     onSubmit: (values) => {
       const { name } = values;
-      chatApi.addChannel(name);
+      chatApi.addChannel(name, () => toast.success(t('modals.addSuccess')));
       dispatch(modalsActions.hideModal());
-      toast.success(t('modals.addSuccess'));
     },
   });
 

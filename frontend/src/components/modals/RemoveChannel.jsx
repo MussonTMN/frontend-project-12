@@ -14,9 +14,8 @@ const RemoveChannel = () => {
   const selectedId = useSelector(getSelectedId);
 
   const handleRemove = (channelId) => {
-    chatApi.removeChannel(channelId);
+    chatApi.removeChannel(channelId, () => toast.success(t('modals.removeSuccess')));
     dispatch(modalsActions.hideModal());
-    toast.success(t('modals.removeSuccess'));
   };
 
   return (

@@ -1,5 +1,7 @@
 import React, { useMemo } from 'react';
 import { ApiContext } from './index.js';
+import { actions as channelsActions } from '../slices/channelsInfo.js';
+import store from '../slices/index.js';
 
 const api = (socket) => {
   const addMessage = (message) => socket.emit('newMessage', message, (response) => {
@@ -8,22 +10,27 @@ const api = (socket) => {
     }
   });
 
-  const addChannel = (name) => socket.emit('newChannel', { name }, (response) => {
+  const addChannel = (name, resolve) => socket.emit('newChannel', { name }, (response) => {
     if (response.status !== 'ok') {
       console.error(response);
     }
+    const { id } = response.data;
+    store.dispatch(channelsActions.setCurrentChannel(id));
+    resolve();
   });
 
-  const removeChannel = (id) => socket.emit('removeChannel', { id }, (response) => {
+  const removeChannel = (id, resolve) => socket.emit('removeChannel', { id }, (response) => {
     if (response.status !== 'ok') {
       console.error(response);
     }
+    resolve();
   });
 
-  const renameChannel = (channel) => socket.emit('renameChannel', channel, (response) => {
+  const renameChannel = (channel, resolve) => socket.emit('renameChannel', channel, (response) => {
     if (response.status !== 'ok') {
       console.error(response);
     }
+    resolve();
   });
 
   return {
