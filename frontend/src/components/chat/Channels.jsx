@@ -19,7 +19,7 @@ const Channels = () => {
   useEffect(() => {
     const channelsBox = document.getElementById('channels-box');
     activeButtonRef.current?.scrollIntoView(channelsBox);
-  }, []);
+  });
 
   const renderChannels = () => (
     <Nav id="channels-box" as="ul" fill variant="pills" className="flex-column px-2 mb-2 overflow-auto h-100 d-block">

@@ -24,7 +24,7 @@ const RenameChannel = () => {
 
   useEffect(() => {
     inputRef.current.focus();
-  }, []);
+  });
 
   const validationSchema = yup.object().shape({
     name: yup
@@ -42,9 +42,13 @@ const RenameChannel = () => {
     },
     validationSchema,
     onSubmit: (values) => {
+      const resolve = () => {
+        toast.success(t('modals.renameSuccess'));
+        dispatch(modalsActions.hideModal());
+      };
+
       const { name } = values;
-      chatApi.renameChannel({ id: selectedId, name }, () => toast.success(t('modals.renameSuccess')));
-      dispatch(modalsActions.hideModal());
+      chatApi.renameChannel({ id: selectedId, name }, resolve);
     },
   });
 
@@ -56,7 +60,6 @@ const RenameChannel = () => {
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
           <Form.Control
-            ref={inputRef}
             className="mb-2"
             onChange={formik.handleChange}
             id="name"
@@ -64,6 +67,7 @@ const RenameChannel = () => {
             value={filter.clean(formik.values.name)}
             isInvalid={formik.errors.name}
             autoComplete="off"
+            ref={inputRef}
           />
           <Form.Label htmlFor="name" className="visually-hidden">{t('modals.name')}</Form.Label>
           <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>

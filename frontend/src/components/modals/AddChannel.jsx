@@ -20,10 +20,6 @@ const AddChannel = () => {
   const channels = useSelector(getChannels);
   const inputRef = useRef();
 
-  useEffect(() => {
-    inputRef.current.focus();
-  }, []);
-
   const validationSchema = yup.object().shape({
     name: yup
       .string()
@@ -40,10 +36,18 @@ const AddChannel = () => {
     },
     validationSchema,
     onSubmit: (values) => {
+      const resolve = () => {
+        toast.success(t('modals.addSuccess'));
+        dispatch(modalsActions.hideModal());
+      };
+
       const { name } = values;
-      chatApi.addChannel(name, () => toast.success(t('modals.addSuccess')));
-      dispatch(modalsActions.hideModal());
+      chatApi.addChannel(name, resolve);
     },
+  });
+
+  useEffect(() => {
+    inputRef.current.focus();
   });
 
   return (
